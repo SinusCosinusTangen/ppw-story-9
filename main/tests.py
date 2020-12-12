@@ -14,7 +14,7 @@ class loginTest(TestCase):
     def test_halaman_login(self):
         response = Client().get('/')
         html_response = response.content.decode('utf8')
-        self.assertIn("Please LogIn Here!", html_response)
+        self.assertIn("Please Log In First!", html_response)
         self.assertIn("Username", html_response)
         self.assertIn("Password", html_response)
         self.assertIn("Don't have an account? Create one <a class=\"to-register-ref\" href=\"register/\">here</a>", html_response)
@@ -47,7 +47,7 @@ class loginTest(TestCase):
     def test_halaman_gagal_login(self):
         response = Client().post('/', {'username':'jmshaha', 'password':'boba3223'})
         html_response = response.content.decode('utf8')
-        self.assertIn("Please LogIn Here!", html_response)
+        self.assertIn("Please Log In First!", html_response)
         self.assertIn("Username", html_response)
         self.assertIn("Password", html_response)
         self.assertIn("Don't have an account? Create one <a class=\"to-register-ref\" href=\"register/\">here</a>", html_response)
