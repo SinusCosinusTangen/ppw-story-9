@@ -13,11 +13,11 @@
         <title>Story 9</title>
     </head>
 
-    <body>
+    <body id="isi">
         {% if not user.is_authenticated %}
-        <div class="wow animated fadeIn" data-wow-delay="0.15s">
-            <div class="container" id="log-in">
-                <h1 class="register-title">Please LogIn Here!</h1>
+        <div class="wow animated fadeIn loginPage align-self-center" data-wow-delay="0.15s">
+            <div class="container align-self-center" id="log-in">
+                <h1>Please Log In First!</h1>
                 <form action="/" method="POST">
                     {% csrf_token %}
 
@@ -35,21 +35,44 @@
                     
                     <p class="to-register">Don't have an account? Create one <a class="to-register-ref" href="register/">here</a></p>
                     
-                    <button type="submit" class="btn register-btn">Log In</button>
+                    <button type="submit" class="btn btn-outline-light register-btn">Log In</button>
                 </form>
             </div>
         </div>
         {% endif %}
         
         {% if user.is_authenticated %}
-        <div class="" id="isi">
-            <h1>{{ text }} {{ name }}</h1>
-            <div class="social-icons-header">
-                <a href="/logout/">
-                    <button type="button" class="btn btn-md features-btn-first animated fadeInLeft wow ml-4" data-wow-delay="0.95s">Log Out</button>
-                </a>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1>{{ text }} {{ name }}</h1>
+                </div>
+                <div class="col-md-auto">
+                    <p>username: {{ username }}</p>
+                </div>
+                 <div class="col col-lg-2">
+                    <a href="/logout/">
+                        <button type="button" class="btn btn-outline-light btn-md features-btn-first animated fadeInLeft wow ml-4" data-wow-delay="0.95s">Log Out</button>
+                    </a>
+                </div>
             </div>
         </div>
+
+        <input id="keyword" placeholder="Search by Title">
+
+        <table class="table table-bordered" style="color: white;">
+            <thead>
+                <tr>
+                    <th class="judul">Title</th>
+                    <th class="penulis">Autors</th>
+                    <th>Cover Image</th>
+                </tr>
+            </thead>
+
+            <tbody id="daftar_isi">
+            </tbody>
+        </table>
 
         {% endif %}
 
@@ -68,13 +91,46 @@
             console.log(n);
             if (n >= 11 && n < 15) {
                 document.getElementById("isi").classList.add('noon');
-            } else {
+            } else if (n < 11 && n >= 3) {
+                document.getElementById("isi").classList.add('morning');
+            } else if (n < 18 && n >= 15) {
+                document.getElementById("isi").classList.add('evening');
+            } else if (n < 3 || n >= 18) {
                 document.getElementById("isi").classList.add('night');
             }
             console.log("test");
             }
 
             change_background();
+        </script>
+
+        <script type="text/javascript">
+            $("#keyword").keyup(function(){
+                var keyword = $("#keyword").val();
+                console.log(keyword);
+
+                $.ajax({
+                    url: '/data?q=' + keyword,
+                    success: function(data) {
+                        var array_items = data.items;
+                        console.log(array_items);
+                        $("#daftar_isi").empty();
+
+                        
+
+                        for (i = 0; i < array_items.length; i++) {
+                            var judul = array_items[i].volumeInfo.title;
+                            var gambar = array_items[i].volumeInfo.imageLinks.smallThumbnail;
+                            var penulis = array_items[i].volumeInfo.authors;
+
+                            if(penulis === undefined){
+                                var penulis = "Unknown";
+                            }
+                            $("#daftar_isi").append("<tr><td class='judul'>" + judul + "</td><td class='penulis'>" + penulis + "</td><td><img src=" + gambar + "></td></tr>")
+                        }
+                    }
+                });
+            });
         </script>
     </body>
 <html>

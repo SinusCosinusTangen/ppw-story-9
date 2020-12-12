@@ -1,15 +1,31 @@
 .morning {
-    background-color: aliceblue;
+    background-image: url('img/morning.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .noon {
-    background-color: coral;
+    background-image: url('img/noon.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .evening {
-    background-color: orangered;
+    background-image: url('img/evening.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .night {
-    background-color: black;
+    background-image: url('img/night.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.loginPage {
+    margin: auto;
+    margin-top: auto;
+    width: fit-content;
+    height: fit-content;
 }

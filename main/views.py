@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import Registration
+from django.http import JsonResponse
 import datetime
+import requests
+import json
 
 # Create your views here.
 def index(request):
     name = ""
+    username = ""
     date = datetime.datetime.now().hour
     text = "test"
     if date < 11 and date >= 3:
@@ -28,7 +32,7 @@ def index(request):
             name = request.user.first_name + " " + request.user.last_name
         else :
             messages.error(request,'username or password is not correct')
-    context = {'text':text, 'name':name}
+    context = {'text':text, 'name':name, 'username':username}
     return render(request, 'index.html', context)
 
 def register(request):
@@ -44,3 +48,9 @@ def register(request):
 def logOut(request):
     logout(request)
     return redirect('/')
+
+def data(request):
+    url = "https://www.googleapis.com/books/v1/volumes?q=" + request.GET['q']
+    ret = requests.get(url)
+    data = json.loads(ret.content)
+    return JsonResponse(data, safe=False)
