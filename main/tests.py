@@ -1,6 +1,9 @@
+from datetime import date
+from django.http import response
 from django.test import TestCase
 from django.test.client import Client
 from django.contrib.auth.models import User
+from . import views
 
 # Create your tests here.
 class loginTest(TestCase):
@@ -29,7 +32,8 @@ class loginTest(TestCase):
         self.assertIn("Register", html_response)
 
     def test_simpan_user(self):
-        Client().post('/register/', {'first_name': 'James', 'last_name': 'Frederix', 'username':'jmshaha', 'password1':'boba3223', 'password2':'boba3223'})
+        response = Client().post('/register/', {'first_name': 'James', 'last_name': 'Frederix', 'username':'jmshaha', 'password1':'boba3223', 'password2':'boba3223'})
+        self.assertEqual(response.status_code, 302)
         self.assertEquals(User.objects.all().count(), 1)
 
     def test_halaman_setelah_login(self):
@@ -49,3 +53,7 @@ class loginTest(TestCase):
         self.assertIn("Don't have an account? Create one <a class=\"to-register-ref\" href=\"register/\">here</a>", html_response)
         self.assertIn("Log In", html_response)
         self.assertIn("username or password is not correct", html_response)
+
+    def test_logout(self):
+        response = Client().get('/logout/')
+        self.assertEqual(response.status_code, 302)

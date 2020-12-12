@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <title>Story 9</title>
+    </head>
+
+    <body>
+        {% if not user.is_authenticated %}
+        <div class="wow animated fadeIn" data-wow-delay="0.15s">
+            <div class="container" id="log-in">
+                <h1 class="register-title">Please LogIn Here!</h1>
+                <form action="/" method="POST">
+                    {% csrf_token %}
+
+                    <div class="register-input">
+                        <label for="username">Username</label> <br>
+                        <input id="username" type="text" name="username" required>
+                    </div>
+                    <div class="register-input">
+                        <label for="password">Password</label> <br>
+                        <input id="password" type="password" name="password" required>
+                    </div>
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    
+                    <p class="to-register">Don't have an account? Create one <a class="to-register-ref" href="register/">here</a></p>
+                    
+                    <button type="submit" class="btn register-btn">Log In</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if user.is_authenticated %}
+        <div class="" id="isi">
+            <h1>{{ text }} {{ name }}</h1>
+            <div class="social-icons-header">
+                <a href="/logout/">
+                    <button type="button" class="btn btn-md features-btn-first animated fadeInLeft wow ml-4" data-wow-delay="0.95s">Log Out</button>
+                </a>
+            </div>
+        </div>
+
+        {% endif %}
+
+        <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    
+        <script>
+            {% comment %} setInterval(change_background, 1000 * 60 * 60); 
+                   
+            {% endcomment %}
+
+            function change_background() {
+            var d = new Date();
+            var n = d.getHours();
+            console.log(n);
+            if (n >= 11 && n < 15) {
+                document.getElementById("isi").classList.add('noon');
+            } else {
+                document.getElementById("isi").classList.add('night');
+            }
+            console.log("test");
+            }
+
+            change_background();
+        </script>
+    </body>
+<html>

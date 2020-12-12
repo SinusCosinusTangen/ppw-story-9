@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Resgiter</title>
+    </head>
+
+    <body>
+        <div class="container register">
+            <h1 class="register-title">Please Register Here!</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="register-input">
+                    <label for="username">First Name</label> <br>
+                    {{ form.first_name }} <br>
+                </div>
+
+                <div class="register-input">
+                    <label for="username">Last Name</label> <br>
+                    {{ form.last_name }} <br>
+                </div>
+
+                <div class="register-input">
+                    <label for="username">Username</label> <br>
+                    {{ form.username }} <br>
+                </div>
+                
+                <div class="register-input">
+                    <label for="password1">Password</label> <br>
+                    {{ form.password1 }} <br>
+                </div>
+                
+                <div class="register-input">
+                    <label for="password2">Password Confirmation</label> <br>
+                    {{ form.password2 }} <br>
+                </div>
+        
+                <button type="submit" class="btn register-btn">Register</button>
+            </form>
+        </div>    
+    </body>
+</html>
